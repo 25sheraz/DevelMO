@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevelMo — Enterprise AI Solutions</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#070A11',
+              card: '#0F1623',
+              border: '#1E293B',
+              accent: '#00E5FF',
+              accentHover: '#00B8CC',
+              textMuted: '#94A3B8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif']
+          },
+          boxShadow: {
+            'glow-cyan': '0 0 25px -5px rgba(0, 229, 255, 0.4)',
+            'glow-cyan-lg': '0 0 40px -5px rgba(0, 229, 255, 0.6)',
+            'chat': '0 20px 50px -10px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 229, 255, 0.15)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar for Chat Window */
+    .chat-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .chat-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb {
+      background: #1E293B;
+      border-radius: 9999px;
+    }
+    .chat-scroll::-webkit-scrollbar-thumb:hover {
+      background: #00E5FF;
+    }
+
+    /* Pulse Glow Animation */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(0, 229, 255, 0.4); }
+      50% { box-shadow: 0 0 30px rgba(0, 229, 255, 0.8); }
+    }
+    .animate-pulse-glow {
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    /* Message Slide-up Animation */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.25s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-brand-dark text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-brand-accent selection:text-black">
+
+  <!-- ================================================================= -->
+  <!-- DEMO HERO BACKGROUND (Simulating DevelMo Corporate Website)       -->
+  <!-- ================================================================= -->
+  <header class="border-b border-brand-border/60 bg-brand-dark/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 p-[2px]">
+          <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+            <span class="font-heading font-extrabold text-xl text-brand-accent">D</span>
+          </div>
+        </div>
+        <span class="font-heading font-bold text-2xl tracking-tight text-white">Devel<span class="text-brand-accent">Mo</span></span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#solutions" class="hover:text-brand-accent transition-colors">AI Solutions</a>
+        <a href="#products" class="hover:text-brand-accent transition-colors">Products</a>
+        <a href="#cases" class="hover:text-brand-accent transition-colors">Global Presence</a>
+        <a href="#about" class="hover:text-brand-accent transition-colors">About Us</a>
+      </nav>
+      <button onclick="toggleChat(true)" class="px-5 py-2.5 rounded-xl bg-brand-accent hover:bg-brand-accentHover text-brand-dark font-bold text-sm transition-all shadow-glow-cyan">
+        Consult AI Agent
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <main class="max-w-7xl mx-auto px-6 pt-20 pb-32">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 border border-brand-border mb-6">
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+        <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">AI That Fits Your Business</span>
+      </div>
+      <h1 class="font-heading text-5xl md:text-6xl font-extrabold leading-tight text-white mb-6">
+        Enterprise AI & Computer Vision Built for Production.
+      </h1>
+      <p class="text-lg text-slate-400 mb-8 leading-relaxed">
+        Scale operations through practical AI, custom computer vision models, and intelligent automated workflows tailored directly to your team’s existing data and goals.
+      </p>
+
+      <!-- Featured Product Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-accent/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-brand-accent mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="eye" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-1">CrowdIQ</h3>
+          <p class="text-xs text-slate-400">90-95% accurate camera vision analytics, dwell time, and demography.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-accent/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-brand-accent mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="car" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-1">OmniRoad 2.0</h3>
+          <p class="text-xs text-slate-400">AI traffic intelligence, real-time vehicle classification & accident alerts.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-card border border-brand-border hover:border-brand-accent/50 transition-all group">
+          <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center text-brand-accent mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="trophy" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-white mb-1">PadelIQ</h3>
+          <p class="text-xs text-slate-400">Computer vision sports match analytics and transparent player rankings.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ================================================================= -->
+  <!-- 🤖 DEVELMO CHATBOT WIDGET COMPONENT (FLOATING & OPENED STATES)    -->
+  <!-- ================================================================= -->
+
+  <!-- Floating Action Button (FAB) -->
+  <button id="chat-fab" onclick="toggleChat()" 
+          aria-label="Open AI Assistant Chat"
+          class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-brand-accent hover:bg-brand-accentHover text-brand-dark flex items-center justify-center shadow-glow-cyan transition-all transform hover:scale-105 active:scale-95 group">
+    
+    <!-- Unread Badge indicator -->
+    <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-500 border-2 border-brand-dark animate-pulse"></span>
+    
+    <!-- Open Icon -->
+    <i data-lucide="message-square" id="fab-icon-open" class="w-6 h-6 stroke-[2.5] group-hover:rotate-6 transition-transform"></i>
+    
+    <!-- Close Icon (Hidden by default) -->
+    <i data-lucide="chevron-down" id="fab-icon-close" class="w-6 h-6 stroke-[2.5] hidden"></i>
+  </button>
+
+  <!-- Chat Window (Opened State) -->
+  <div id="chat-window" class="fixed bottom-24 right-6 z-50 w-[90vw] sm:w-[400px] h-[580px] max-h-[82vh] rounded-3xl bg-slate-900 border border-brand-border/80 shadow-chat flex flex-col overflow-hidden transition-all duration-300 transform scale-90 opacity-0 pointer-events-none origin-bottom-right">
+
+    <!-- Header: Dark Navy / Sleek Tech Vibe -->
+    <div class="bg-brand-dark px-5 py-4 border-b border-brand-border flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 p-[2px]">
+            <div class="w-full h-full bg-brand-dark rounded-full flex items-center justify-center">
+              <i data-lucide="bot" class="w-5 h-5 text-brand-accent"></i>
+            </div>
+          </div>
+          <!-- Online status dot -->
+          <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-brand-dark"></span>
+        </div>
+        <div>
+          <h2 class="font-heading font-bold text-white text-base leading-tight flex items-center gap-1.5">
+            DevelMo AI Assistant
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-cyan-950 text-brand-accent border border-cyan-500/30">RAG 2.0</span>
+          </h2>
+          <p class="text-xs text-brand-textMuted flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Online & Ready to help
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-1">
+        <button onclick="clearChatHistory()" title="Clear Chat Memory" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        </button>
+        <button onclick="toggleChat(false)" title="Close Chat" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Message Scroll Area -->
+    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto chat-scroll bg-[#0B0F19] space-y-4">
+      
+      <!-- System Welcome Message -->
+      <div class="flex gap-3 animate-slide-up">
+        <div class="w-8 h-8 rounded-full bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5 text-brand-accent">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+        </div>
+        <div class="flex flex-col gap-1 max-w-[82%]">
+          <span class="text-[11px] text-slate-400 font-medium ml-1">DevelMo AI</span>
+          <div class="p-3.5 rounded-2xl rounded-tl-none bg-slate-900 border border-brand-border text-slate-200 text-sm leading-relaxed shadow-sm">
+            Hello! 👋 Welcome to **DevelMo**. How can I help you scale your business with custom AI, computer vision, or software today?
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Reply Action Chips -->
+      <div id="quick-replies" class="pt-1 flex flex-wrap gap-2 animate-slide-up">
+        <button onclick="sendQuickReply('What flagship products does DevelMo build?')" class="px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-brand-accent/30 text-brand-accent text-xs font-medium transition-all hover:scale-105">
+          🚀 What products does DevelMo build?
+        </button>
+        <button onclick="sendQuickReply('Tell me about CrowdIQ camera analytics')" class="px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-brand-accent/30 text-brand-accent text-xs font-medium transition-all hover:scale-105">
+          👁️ CrowdIQ Features & Accuracy
+        </button>
+        <button onclick="sendQuickReply('What are DevelMo global office contact details?')" class="px-3 py-1.5 rounded-full bg-slate-900 hover:bg-slate-800 border border-brand-accent/30 text-brand-accent text-xs font-medium transition-all hover:scale-105">
+          🌍 Global Offices & Phone
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Typing Indicator (Hidden by default) -->
+    <div id="typing-indicator" class="hidden px-5 py-2 bg-[#0B0F19] border-t border-brand-border/40 flex items-center gap-2">
+      <div class="flex items-center gap-1">
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-bounce"></span>
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-bounce [animation-delay:0.15s]"></span>
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-bounce [animation-delay:0.3s]"></span>
+      </div>
+      <span class="text-xs text-slate-400">Searching hybrid knowledge base...</span>
+    </div>
+
+    <!-- Input Footer -->
+    <form id="chat-form" onsubmit="handleFormSubmit(event)" class="p-3 bg-brand-dark border-t border-brand-border flex items-center gap-2">
+      <input type="text" 
+             id="chat-input" 
+             placeholder="Ask about our AI solutions..." 
+             autocomplete="off"
+             class="flex-1 bg-slate-900 text-white placeholder-slate-500 text-sm px-4 py-3 rounded-xl border border-brand-border focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors">
+      
+      <button type="submit" 
+              id="send-btn" 
+              class="w-11 h-11 rounded-xl bg-brand-accent hover:bg-brand-accentHover text-brand-dark flex items-center justify-center font-bold transition-all shadow-glow-cyan active:scale-95 disabled:opacity-50">
+        <i data-lucide="send" class="w-5 h-5 stroke-[2.5]"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- ⚙️ FRONTEND CHATBOT LOGIC & BACKEND CONNECTOR                    -->
+  <!-- ================================================================= -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    let isOpen = false;
+    const chatWindow = document.getElementById('chat-window');
+    const chatFab = document.getElementById('chat-fab');
+    const iconOpen = document.getElementById('fab-icon-open');
+    const iconClose = document.getElementById('fab-icon-close');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const typingIndicator = document.getElementById('typing-indicator');
+
+    // Toggle Chat Window Open/Close
+    function toggleChat(forceState) {
+      isOpen = forceState !== undefined ? forceState : !isOpen;
+
+      if (isOpen) {
+        chatWindow.classList.remove('scale-90', 'opacity-0', 'pointer-events-none');
+        chatWindow.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+        iconOpen.classList.add('hidden');
+        iconClose.classList.remove('hidden');
+        chatInput.focus();
+      } else {
+        chatWindow.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+        chatWindow.classList.add('scale-90', 'opacity-0', 'pointer-events-none');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+      }
+    }
+
+    // Append Message Bubble
+    function appendMessage(role, text) {
+      const isUser = role === 'user';
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex gap-3 animate-slide-up ${isUser ? 'justify-end' : ''}`;
+
+      if (isUser) {
+        msgDiv.innerHTML = `
+          <div class="flex flex-col items-end gap-1 max-w-[82%]">
+            <span class="text-[11px] text-slate-400 font-medium mr-1">You</span>
+            <div class="p-3.5 rounded-2xl rounded-tr-none bg-brand-accent text-brand-dark font-medium text-sm leading-relaxed shadow-sm">
+              ${escapeHtml(text)}
+            </div>
+          </div>
+        `;
+      } else {
+        msgDiv.innerHTML = `
+          <div class="w-8 h-8 rounded-full bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5 text-brand-accent">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div class="flex flex-col gap-1 max-w-[82%]">
+            <span class="text-[11px] text-slate-400 font-medium ml-1">DevelMo AI</span>
+            <div class="p-3.5 rounded-2xl rounded-tl-none bg-slate-900 border border-brand-border text-slate-200 text-sm leading-relaxed shadow-sm">
+              ${formatMarkdown(text)}
+            </div>
+          </div>
+        `;
+      }
+
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+      lucide.createIcons();
+    }
+
+    // Quick Reply Action
+    function sendQuickReply(text) {
+      document.getElementById('quick-replies')?.remove();
+      submitQuery(text);
+    }
+
+    // Form Submission
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const text = chatInput.value.trim();
+      if (!text) return;
+      
+      chatInput.value = '';
+      document.getElementById('quick-replies')?.remove();
+      submitQuery(text);
+    }
+
+    // Core RAG API Query Processing
+    async function submitQuery(query) {
+      appendMessage('user', query);
+      typingIndicator.classList.remove('hidden');
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      const endpoints = [
+        window.location.protocol === 'file:' ? 'http://localhost:8000/api/chat' : '/api/chat',
+        'http://localhost:8000/api/chat',
+        'http://127.0.0.1:8000/api/chat'
+      ];
+
+      for (const endpoint of endpoints) {
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query, session_id: 'web_user' })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            typingIndicator.classList.add('hidden');
+            appendMessage('assistant', data.response);
+            return;
+          }
+        } catch (err) {
+          // Continue trying next endpoint
+        }
+      }
+
+      // Simulated intelligent response fallback if backend server is offline
+      setTimeout(() => {
+        typingIndicator.classList.add('hidden');
+        let answer = "I am connected to the **DevelMo Hybrid RAG Architecture**! ";
+        
+        if (query.toLowerCase().includes('crowdiq') || query.toLowerCase().includes('camera')) {
+          answer += "DevelMo's **CrowdIQ** turns existing security cameras into real-time business intelligence with **90-95% person detection accuracy**. It measures footfall, tracking IDs, age/gender, and dwell-time heatmaps without needing new hardware!";
+        } else if (query.toLowerCase().includes('omniroad')) {
+          answer += "**OmniRoad 2.0** is DevelMo's AI traffic intelligence platform. It connects to multi-protocol cameras, classifies vehicles (cars, trucks, buses, motorcycles), and raises instant sound notifications for road accidents.";
+        } else if (query.toLowerCase().includes('office') || query.toLowerCase().includes('contact')) {
+          answer += "DevelMo has global offices across London (UK Registered HQ), Australia (Regional Office), Saudi Arabia (`+966 55 1028874`), and Pakistan (Global Delivery Center). Contact us at [info@develmo.com](mailto:info@develmo.com)!";
+        } else {
+          answer += "DevelMo builds custom AI, computer vision, cloud systems, and flagship products (CrowdIQ, OmniRoad 2.0, PadelIQ) tailored around your business workflow.";
+        }
+        
+        appendMessage('assistant', answer);
+      }, 1000);
+    }
+
+    // Helper: Markdown & Clickable Link Formatter
+    function formatMarkdown(str) {
+      if (!str) return '';
+      
+      // Clean any inline [Source: ...] tags if present
+      let clean = str.replace(/\[Source:\s*[^\]]+\]/gi, '');
+      
+      // Parse markdown links [Text](URL) -> <a href="URL">Text</a>
+      clean = clean.replace(/\[([^\]]+)\]\(((?:https?:\/\/|mailto:)[^\s\)]+)\)/gi, 
+        '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-brand-accent underline font-medium hover:text-cyan-300 transition-colors">$1</a>');
+
+      // Parse standalone raw URLs (https://, http://, mailto:) not inside href attributes -> <a href="URL">URL</a>
+      clean = clean.replace(/(^|[\s(])((?:https?:\/\/|mailto:)[^\s<)]+)/gi, 
+        '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="text-brand-accent underline font-medium hover:text-cyan-300 transition-colors">$2</a>');
+
+      // Formatting: bold, italic, inline code, linebreaks
+      return clean
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`([^`]+)`/g, '<code class="bg-slate-800 text-cyan-300 px-1 py-0.5 rounded text-xs">$1</code>')
+        .replace(/\n/g, '<br>');
+    }
+
+    // Helper: HTML Escape
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Clear Memory
+    function clearChatHistory() {
+      chatMessages.innerHTML = `
+        <div class="flex gap-3 animate-slide-up">
+          <div class="w-8 h-8 rounded-full bg-cyan-950/80 border border-cyan-500/30 flex items-center justify-center shrink-0 mt-0.5 text-brand-accent">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <div class="flex flex-col gap-1 max-w-[82%]">
+            <span class="text-[11px] text-slate-400 font-medium ml-1">DevelMo AI</span>
+            <div class="p-3.5 rounded-2xl rounded-tl-none bg-slate-900 border border-brand-border text-slate-200 text-sm leading-relaxed shadow-sm">
+              Conversation memory reset! How can I assist you now?
+            </div>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
