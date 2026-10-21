@@ -1,5 +1,7 @@
 # DevelMo AI — Dual-Vector Hybrid RAG Assistant
 
+![DevelMO AI Knowledge Assistant: company documents turned into grounded answers with source citations, hybrid search and session memory](docs/cover.jpg)
+
 <p align="center">
   <strong>Production-grade Enterprise Retrieval-Augmented Generation (RAG) System with Dual-Vector Search, Cross-Encoder Reranking, Redis Session Memory, and Embedded React Chat Widget.</strong>
 </p>
